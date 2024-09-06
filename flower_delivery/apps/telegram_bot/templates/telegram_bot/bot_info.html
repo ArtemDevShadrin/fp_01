@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Наш Telegram-бот{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Мы в Telegram</h1>
+    <p>Вы можете воспользоваться нашим ботом для удобного заказа доставки цветов прямо в Telegram.</p>
+
+    <h2>Ссылка на бота:</h2>
+    <p><a href="https://t.me/flower_delivery_ArtShad_Bot" target="_blank" class="btn btn-primary">Перейти к боту</a></p>
+
+    <h2>Команды бота:</h2>
+    <ul>
+        <li><strong>/start:</strong> Приветственное сообщение и запуск бота.</li>
+        <li><strong>/link:</strong> Привязка вашего аккаунта на сайте к Telegram.</li>
+        <li><strong>/orders:</strong> Показать последние 5 заказов.</li>
+        <li><strong>/orders_all:</strong> Показать все ваши заказы.</li>
+        <li><strong>/info:</strong> Показать информацию о заказе по его номеру.</li>
+        <li><strong>/analytics:</strong> Получить отчеты по заказам и аналитике.</li>
+    </ul>
+
+    <h3>Пример использования:</h3>
+    <p>Чтобы получить информацию о ваших заказах, вы можете воспользоваться командой <code>/orders</code>, и бот покажет вам последние заказы.</p>
+</div>
+{% endblock %}

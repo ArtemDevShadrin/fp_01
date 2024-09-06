@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #343a40;
+    margin-bottom: 1.5rem;
+}
+
+.navbar {
+    background-color: #007bff;
+}
+
+.navbar-brand, .nav-link {
+    color: #000000 !important;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.table {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer {
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+
+.card {
+    height: 100%;  /* Полная высота для всех карточек */
+    display: flex;
+    flex-direction: column;
+}
+
+.card img {
+    object-fit: cover;  /* Обеспечивает заполнение изображения по размеру */
+    height: 200px;  /* Фиксированная высота для изображений */
+}
+
+.card-body {
+    flex-grow: 1;  /* Заполнение оставшегося пространства */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-title, .card-text, form {
+    margin-bottom: auto;
+}
+
+.card .btn {
+    margin-top: auto;  /* Позиционирование кнопки внизу карточки */
+}
+
+.card-order {
+    margin-bottom: 20px;
+}
+
+.card-order-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.text-warning i.fa-star {
+    color: #ffc107; /* Цвет золотой звезды */
+}
+

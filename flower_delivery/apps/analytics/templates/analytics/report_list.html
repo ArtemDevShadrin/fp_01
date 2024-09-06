@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Список отчетов{% endblock %}
+
+{% block content %}
+<h1>Список отчетов</h1>
+
+<form method="get" class="mb-3">
+    <div class="form-row">
+        <div class="col">
+            <label for="{{ form.start_date.id_for_label }}">Дата начала:</label>
+            {{ form.start_date }}
+        </div>
+        <div class="col">
+            <label for="{{ form.end_date.id_for_label }}">Дата окончания:</label>
+            {{ form.end_date }}
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary mt-4">Фильтровать</button>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Дата</th>
+            <th>Заказ</th>
+            <th>Данные по продажам</th>
+            <th>Прибыль</th>
+            <th>Расходы</th>
+            <th>Детали</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for report in reports %}
+        <tr>
+            <td>{{ report.id }}</td>
+            <td>{{ report.report_date }}</td>
+            <td>{{ report.order.id }}</td>
+            <td>{{ report.sales_data }} USD</td>
+            <td>{{ report.profit }} USD</td>
+            <td>{{ report.expenses }} USD</td>
+            <td><a href="{% url 'report_detail' report.id %}" class="btn btn-info">Подробнее</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

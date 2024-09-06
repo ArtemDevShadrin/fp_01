@@ -3,9 +3,96 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
-<h1>{{ product.name }}</h1>
-{% if product.image %}
-<img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
-{% endif %}
-<p>Price: {{ product.price }} USD</p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            {% if product.image %}
+            <div class="product-image">
+                <img src="{{ product.image.url }}" class="img-fluid rounded" alt="{{ product.name }}">
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h1 class="display-4">{{ product.name }}</h1>
+            <p class="lead text-muted">{{ product.description }}</p>
+            <p class="h4 text-primary">Цена: {{ product.price }} USD</p>
+            <p class="text-success">В наличии: {{ product.quantity }} шт.</p>
+
+            <form method="post" action="{% url 'add_to_cart' product.pk %}" class="mt-4">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="quantity" class="form-label">Количество:</label>
+                    <input type="number" name="quantity" id="quantity" class="form-control" value="1" min="1" max="{{ product.quantity }}">
+                </div>
+                {% if product.is_in_stock %}
+                    <button type="submit" class="btn btn-lg btn-success mt-2">Добавить в корзину</button>
+                {% else %}
+                    <p class="text-danger">Товар временно отсутствует</p>
+                {% endif %}
+            </form>
+
+            <hr class="my-4">
+
+            <!-- Иконка для открытия формы отзыва -->
+            <div class="d-flex align-items-center">
+                <h2 class="h4 mr-3">Оставить отзыв</h2>
+                <i class="fas fa-pencil-alt text-primary cursor-pointer" id="toggle-review-form" style="font-size: 1.5rem;"></i>
+            </div>
+
+            <!-- Скрытая форма для оставления отзыва -->
+            <div id="review-form-container" style="display: none;" class="mt-3">
+                <form method="post" action="{% url 'add_review' product.id %}" class="mb-4">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.errors }}
+                        </div>
+                    {% endif %}
+                    <button type="submit" class="btn btn-primary">Оставить отзыв</button>
+                </form>
+            </div>
+
+            <hr class="my-4">
+
+            <h3 class="h4">Отзывы</h3>
+            {% if reviews %}
+                <div class="reviews-list">
+                    {% for review in reviews %}
+                        <div class="review mb-4 p-3 bg-light border rounded">
+                            <div class="d-flex justify-content-between">
+                                <strong>{{ review.user.username }}</strong>
+                                <span class="text-warning">
+                                    {% for i in "12345" %}
+                                        <i class="fas fa-star{% if forloop.counter > review.rating %}-o{% endif %}"></i>
+                                    {% endfor %}
+                                </span>
+                            </div>
+                            <p class="mb-1">{{ review.comment }}</p>
+                            <small class="text-muted"><em>{{ review.created_at|date:"d M Y, H:i" }}</em></small>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Пока отзывов нет. Будьте первым, кто оставит отзыв!</p>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript для показа/скрытия формы отзыва -->
+<script>
+    document.getElementById('toggle-review-form').addEventListener('click', function() {
+        var formContainer = document.getElementById('review-form-container');
+        if (formContainer.style.display === 'none' || formContainer.style.display === '') {
+            formContainer.style.display = 'block';
+        } else {
+            formContainer.style.display = 'none';
+        }
+    });
+</script>
+
 {% endblock %}
+
+

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Отчет №{{ report.id }}{% endblock %}
+
+{% block content %}
+<h1>Отчет №{{ report.id }}</h1>
+<p><strong>Дата:</strong> {{ report.report_date }}</p>
+<p><strong>Заказ:</strong> {{ report.order.id }}</p>
+<p><strong>Данные по продажам:</strong> {{ report.sales_data }} USD</p>
+<p><strong>Прибыль:</strong> {{ report.profit }} USD</p>
+<p><strong>Расходы:</strong> {{ report.expenses }} USD</p>
+<a href="{% url 'report_list' %}" class="btn btn-secondary">Вернуться к списку</a>
+{% endblock %}

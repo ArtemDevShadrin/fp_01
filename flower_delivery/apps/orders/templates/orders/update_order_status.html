@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Изменить статус заказа{% endblock %}
+
+{% block content %}
+<h1>Изменить статус заказа #{{ object.id }}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    <a href="{% url 'order_management' %}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}

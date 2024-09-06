@@ -5,19 +5,32 @@
 {% block content %}
 <h1>Product List</h1>
 <div class="row">
-    {% for product in products %}
-    <div class="col-md-4">
-        <div class="card mb-4 shadow-sm">
-            {% if product.image %}
-            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-title">{{ product.name }}</h5>
-                <p class="card-text">{{ product.price }} USD</p>
-                <a href="{% url 'product_detail' product.pk %}" class="btn btn-primary">View Details</a>
+    {% if products %}
+        {% for product in products %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.price }} USD</p>
+                    <p>В наличии: {{ product.quantity }} шт.</p>
+                    <a href="{% url 'product_detail' product.pk %}" class="btn btn-primary">Подробнее</a>
+                    <form method="post" action="{% url 'add_to_cart' product.pk %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="quantity">Количество:</label>
+                            <input type="number" name="quantity" id="quantity" class="form-control" value="1" min="1" max="{{ product.quantity }}">
+                        </div>
+                        <button type="submit" class="btn btn-success mt-2">В корзину</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        <h4>Товаров еще нет</h4>
+    {% endif %}
 </div>
 {% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Мои заказы{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Мои заказы</h1>
+    {% if orders %}
+    <div class="row">
+        {% for order in orders %}
+        <div class="col-md-4">
+            <div class="card card-order mb-4 shadow-sm">
+                <div class="card-body card-order-body">
+                    <h5 class="card-title">Заказ #{{ order.pk }}</h5>
+                    <p class="card-text"><strong>Статус:</strong> {{ order.status }}</p>
+                    <p class="card-text"><strong>Адрес доставки:</strong> {{ order.delivery_address }}</p>
+                    <p class="card-text"><strong>Товары:</strong></p>
+                    <ul>
+                        {% for detail in order.details.all %}
+                        <li>{{ detail.product.name }} - {{ detail.total_price }} USD - Количество: {{ detail.quantity }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p class="card-text"><strong>Итоговая сумма:</strong> {{ order.total_amount }} USD</p>
+                    <a href="{% url 'repeat_order' order.pk %}" class="btn btn-success">Повторить заказ</a> <!-- Зеленая кнопка -->
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>У вас пока нет заказов.</p>
+    {% endif %}
+</div>
+{% endblock %}

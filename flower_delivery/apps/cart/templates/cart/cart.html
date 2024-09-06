@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+<h1>Корзина</h1>
+<form method="post" action="{% url 'update_cart' %}">
+    {% csrf_token %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Товар</th>
+                <th>Количество</th>
+                <th>Цена</th>
+                <th>Итого</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in products %}
+                {% include 'cart/_cart_item.html' %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>Общая стоимость: {{ total }} USD</h3>
+
+    <div class="d-flex">
+        <button type="submit" class="btn btn-primary">Обновить корзину</button>
+        <a href="{% url 'checkout' %}" class="btn btn-success ml-3">Заказать</a>
+    </div>
+</form>
+{% endblock %}

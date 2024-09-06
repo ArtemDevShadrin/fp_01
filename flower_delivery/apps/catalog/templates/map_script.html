@@ -1,0 +1,37 @@
+<!-- map_script.html -->
+<!-- Подключение Yandex Maps API -->
+<script src="https://api-maps.yandex.ru/2.1/?apikey=da63fd5d-d049-408b-bbf6-c87ed82706ba&lang=ru_RU" type="text/javascript"></script>
+<script type="text/javascript">
+    ymaps.ready(init);
+
+    function init() {
+        var map = new ymaps.Map("map", {
+            center: [56.008, 92.870],  // Координаты Красноярска
+            zoom: 12
+        });
+
+        var placemark;
+        // Добавление возможности выбора места на карте
+        map.events.add('click', function (e) {
+            var coords = e.get('coords');
+
+            if (placemark) {
+                placemark.geometry.setCoordinates(coords);
+            } else {
+                placemark = new ymaps.Placemark(coords, {}, {
+                    preset: 'islands#redDotIcon'
+                });
+                map.geoObjects.add(placemark);
+            }
+
+            // Используем обратное геокодирование для получения адреса
+            ymaps.geocode(coords).then(function (res) {
+                var firstGeoObject = res.geoObjects.get(0);
+                var address = firstGeoObject.getAddressLine();
+
+                // Устанавливаем адрес в поле формы
+                document.getElementById('id_address').value = address;
+            });
+        });
+    }
+</script>

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+{% block title %}Редактировать профиль{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header text-center">
+                    <h4 class="card-title">Редактировать профиль</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="mb-3">
+                            <label for="{{ form.username.id_for_label }}" class="form-label">Имя пользователя</label>
+                            {{ form.username|add_class:"form-control" }}
+                            {{ form.username.errors }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">Email адрес</label>
+                            {{ form.email|add_class:"form-control" }}
+                            {{ form.email.errors }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.phone_number.id_for_label }}" class="form-label">Номер телефона</label>
+                            {{ form.phone_number|add_class:"form-control" }}
+                            {{ form.phone_number.errors }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.address.id_for_label }}" class="form-label">Адрес</label>
+                            {{ form.address|add_class:"form-control" }}
+                            {{ form.address.errors }}
+                        </div>
+
+                        <!-- Контейнер для карты -->
+                        <div id="map" style="width: 100%; height: 400px;"></div>
+
+                        <div class="d-grid mt-3">
+                            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{% url 'profile' %}" class="btn btn-secondary">Отменить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'map_script.html' %}
+
+{% endblock %}
